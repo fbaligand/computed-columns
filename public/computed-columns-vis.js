@@ -122,9 +122,17 @@ module.controller('ComputedColumnsVisController', ($scope, $element, Private) =>
         return table.rows.length > 0;
       });
 
+      const showPagination = hasSomeRows && params.perPage && tableGroups.tables.some(function(table) {
+        return table.rows.length > params.perPage;
+      });
+      $scope.tableVisContainerClass = {
+        "hide-pagination": !showPagination,
+        "hide-export-links": params.hideExportLinks
+      };
+
       $element.trigger('renderComplete');
     }
-
+    
     $scope.hasSomeRows = hasSomeRows;
     if (hasSomeRows) {
       $scope.tableGroups = tableGroups;
